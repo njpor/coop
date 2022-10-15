@@ -2,35 +2,6 @@ const db = require("../models");
 const organization = db.organization;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new organization
-exports.create = (req, res) => {
-    // Validate request
-    if (!req.body.name) {
-        res.status(400).send({
-          message: "Content can not be empty!"
-        });
-        return;
-      }
-
-    // Create a organization
-    const organization = {
-    name: req.body.name,
-    addr: req.body.addr
-    };
-
-  // Save Tutorial in the database
-    organization.create(organization)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the organization."
-      });
-    });
-
-};
 
 // Retrieve all organization from the database.
 exports.findAll = (req, res) => {
@@ -121,19 +92,3 @@ exports.delete = (req, res) => {
       });
 };
 
-// Delete all organization from the database.
-exports.deleteAll = (req, res) => {
-    organization.destroy({
-        where: {},
-        truncate: false
-      })
-        .then(nums => {
-          res.send({ message: `${nums} organization were deleted successfully!` });
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while removing all organization."
-          });
-        });
-};
